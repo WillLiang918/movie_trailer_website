@@ -14,9 +14,9 @@
             padding-top: 80px;
         }
         #trailer .modal-dialog {
-            margin-top: 200px;
-            width: 640px;
-            height: 480px;
+            margin-top: 100px;
+            width: 900px;
+            margin-bottom: 200px;
         }
         .hanging-close {
             position: absolute;
@@ -27,6 +27,40 @@
         #trailer-video {
             width: 100%;
             height: 100%;
+        }
+        #trailer-poster {
+            width: 100%;
+            height: 100%;
+        }
+        .poster-container{
+            top: 0;
+            left: 0;
+            width: 30%;
+            height: 430px;
+            position: absolute;
+        }
+        .youtube-container{
+            top: 0;
+            right: 0;
+            width: 70%;
+            height: 380px;
+            position: absolute;
+        }
+        .story_line-container{
+            top: 380px;
+            right: 0;
+            width: 70%;
+            height: 50px;
+            color: #999999;
+            border-style: solid;
+            border-width: 1px;
+            border-color: black;
+            position: absolute;
+            font-style: italic;
+            padding: 3px;
+            text-align: center;
+            align-items: center;
+            background-color: black;
         }
         .movie-tile {
             margin-bottom: 20px;
@@ -55,18 +89,34 @@
         $(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event) {
             // Remove the src so the player itself gets removed, as this is the only
             // reliable way to ensure the video stops playing in IE
-            $("#trailer-video-container").empty();
+            $("#trailer-poster-container").empty();
+            $("#trailer-youtube-container").empty();
+            $("#trailer-story_line-container").empty();
         });
         // Start playing the video whenever the trailer modal is opened
         $(document).on('click', '.movie-tile', function (event) {
             var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
+            var trailerPosterId = $(this).attr('poster-id')
             var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
-            $("#trailer-video-container").empty().append($("<iframe></iframe>", {
-              'id': 'trailer-video',
-              'type': 'text-html',
-              'src': sourceUrl,
-              'frameborder': 0
-            }));
+            $("#trailer-youtube-container").empty().append(
+              $("<iframe></iframe>", {
+                'id': 'trailer-video',
+                'type': 'text-html',
+                'src': sourceUrl,
+                'frameborder': 0,
+              })
+            );
+            $("#trailer-poster-container").empty().append(
+              $("<img>", {
+                'id': 'trailer-poster',
+                'type': 'text-html',
+                'src': trailerPosterId,
+                'frameborder': 0,
+              })
+            );
+            $("#trailer-story_line-container").empty().text(
+                $(this).attr('story_line-id')
+            );
         });
         // Animate in the movies when the page loads
         $(document).ready(function () {
@@ -74,9 +124,6 @@
             $(this).next("div").show("fast", showNext);
           });
         });
-        // Start playing the video whenever the trailer modal is opened
-        //$(document).on('click', '.dc', function (event) {
-            //}));
     </script>
 </head>
 
@@ -88,7 +135,11 @@
           <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">
             <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>
           </a>
-          <div class="scale-media" id="trailer-video-container">
+          <div class="poster-container" id="trailer-poster-container">
+          </div>
+          <div class="youtube-container" id="trailer-youtube-container">
+          </div>
+          <div class="story_line-container" id="trailer-story_line-container">
           </div>
         </div>
       </div>
@@ -98,87 +149,84 @@
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
           <div class="navbar-header">
-            <ul>
-                <a class="navbar-brand" href="#">Recent Marvel & DC Movies</a>
-
-            </ul>
+            <a class="navbar-brand" href="#">Recent Marvel & DC Movies</a>
           </div>
         </div>
       </div>
     </div>
     <div class="container">
-      
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="_rRoD28-WgU" data-toggle="modal" data-target="#trailer">
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" story_line-id="The team must learn to harness abilities gained from an alternate universe to save Earth from a friend turned enemy" poster-id="https://upload.wikimedia.org/wikipedia/en/f/f4/Fantastic_Four_2015_poster.jpg" data-trailer-youtube-id="_rRoD28-WgU" data-toggle="modal" data-target="#trailer">
     <img src="https://upload.wikimedia.org/wikipedia/en/f/f4/Fantastic_Four_2015_poster.jpg" width="220" height="342">
     <h4>Fantastic Four <br> (2015)</h4>
 </div>
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="pWdKf3MneyI" data-toggle="modal" data-target="#trailer">
+<div class="col-md-6 col-lg-4 movie-tile text-center" story_line-id="Lang must help defend Dr. Pym's Ant-Man technology and plot a heist with worldwide ramifications" poster-id="https://upload.wikimedia.org/wikipedia/en/7/75/Ant-Man_poster.jpg" data-trailer-youtube-id="pWdKf3MneyI" data-toggle="modal" data-target="#trailer">
     <img src="https://upload.wikimedia.org/wikipedia/en/7/75/Ant-Man_poster.jpg" width="220" height="342">
     <h4>Ant-Man <br> (2015)</h4>
 </div>
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="tmeOjFno6Do" data-toggle="modal" data-target="#trailer">
+<div class="col-md-6 col-lg-4 movie-tile text-center" story_line-id="The Avengers must work together to defeat Ultron, a mechanical artificial intelligence bent on human extinction" poster-id="https://upload.wikimedia.org/wikipedia/en/1/1b/Avengers_Age_of_Ultron.jpg" data-trailer-youtube-id="tmeOjFno6Do" data-toggle="modal" data-target="#trailer">
     <img src="https://upload.wikimedia.org/wikipedia/en/1/1b/Avengers_Age_of_Ultron.jpg" width="220" height="342">
     <h4>Avengers: Age of Ultron <br> (2015)</h4>
 </div>
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="2XltzyLcu0g" data-toggle="modal" data-target="#trailer">
+<div class="col-md-6 col-lg-4 movie-tile text-center" story_line-id="Peter Quill forms an uneasy alliance with a group of extraterrestrial misfits who are fleeing after stealing a powerful artifact" poster-id="https://upload.wikimedia.org/wikipedia/en/8/8f/GOTG-poster.jpg" data-trailer-youtube-id="2XltzyLcu0g" data-toggle="modal" data-target="#trailer">
     <img src="https://upload.wikimedia.org/wikipedia/en/8/8f/GOTG-poster.jpg" width="220" height="342">
     <h4>Guardians of the Galaxy <br> (2014)</h4>
 </div>
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="pK2zYHWDZKo" data-toggle="modal" data-target="#trailer">
+<div class="col-md-6 col-lg-4 movie-tile text-center" story_line-id="Wolverine traveling back in time to 1973 to save the future of mankind" poster-id="https://upload.wikimedia.org/wikipedia/en/0/0c/X-Men_Days_of_Future_Past_poster.jpg" data-trailer-youtube-id="pK2zYHWDZKo" data-toggle="modal" data-target="#trailer">
     <img src="https://upload.wikimedia.org/wikipedia/en/0/0c/X-Men_Days_of_Future_Past_poster.jpg" width="220" height="342">
     <h4>X-Men: Days of Future Past <br> (2014)</h4>
 </div>
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="DlM2CWNTQ84" data-toggle="modal" data-target="#trailer">
+<div class="col-md-6 col-lg-4 movie-tile text-center" story_line-id="Sequel to The Amazing Spider-Man" poster-id="https://upload.wikimedia.org/wikipedia/en/0/02/The_Amazing_Spiderman_2_poster.jpg" data-trailer-youtube-id="DlM2CWNTQ84" data-toggle="modal" data-target="#trailer">
     <img src="https://upload.wikimedia.org/wikipedia/en/0/02/The_Amazing_Spiderman_2_poster.jpg" width="220" height="342">
     <h4>The Amazing Spider-Man 2 <br> (2014)</h4>
 </div>
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="7SlILk2WMTI" data-toggle="modal" data-target="#trailer">
+<div class="col-md-6 col-lg-4 movie-tile text-center" story_line-id="Captain America, Black Widow, and Falcon join forces to uncover a conspiracy within S.H.I.E.L.D. while facing a mysterious assassin known as the Winter Soldier" poster-id="https://upload.wikimedia.org/wikipedia/en/e/e8/Captain_America_The_Winter_Soldier.jpg" data-trailer-youtube-id="7SlILk2WMTI" data-toggle="modal" data-target="#trailer">
     <img src="https://upload.wikimedia.org/wikipedia/en/e/e8/Captain_America_The_Winter_Soldier.jpg" width="220" height="342">
     <h4>Captain America: The Winter Soldier <br> (2014)</h4>
 </div>
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="npvJ9FTgZbM" data-toggle="modal" data-target="#trailer">
+<div class="col-md-6 col-lg-4 movie-tile text-center" story_line-id="Thor teams up with Loki to save the Nine Realms from the Dark Elves led by the vengeful Malekith, who intends to plunge the universe into darkness" poster-id="https://upload.wikimedia.org/wikipedia/en/7/7e/Thor_-_The_Dark_World_poster.jpg" data-trailer-youtube-id="npvJ9FTgZbM" data-toggle="modal" data-target="#trailer">
     <img src="https://upload.wikimedia.org/wikipedia/en/7/7e/Thor_-_The_Dark_World_poster.jpg" width="220" height="342">
     <h4>Thor: The Dark World <br> (2013)</h4>
 </div>
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="Rh1LdTFkm7I" data-toggle="modal" data-target="#trailer">
+<div class="col-md-6 col-lg-4 movie-tile text-center" story_line-id="Logan travels to Japan, where he engages an old acquaintance in a struggle that has lasting consequences" poster-id="https://upload.wikimedia.org/wikipedia/en/7/74/The_Wolverine_posterUS.jpg" data-trailer-youtube-id="Rh1LdTFkm7I" data-toggle="modal" data-target="#trailer">
     <img src="https://upload.wikimedia.org/wikipedia/en/7/74/The_Wolverine_posterUS.jpg" width="220" height="342">
     <h4>The Wolverine <br> (2013)</h4>
 </div>
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="2CzoSeClcw0" data-toggle="modal" data-target="#trailer">
+<div class="col-md-6 col-lg-4 movie-tile text-center" story_line-id="Tony Stark tries to recover from posttraumatic stress disorder caused by the events of The Avengers, while investigating a terrorist organization led by the mysterious Mandarin" poster-id="https://upload.wikimedia.org/wikipedia/en/d/d5/Iron_Man_3_theatrical_poster.jpg" data-trailer-youtube-id="2CzoSeClcw0" data-toggle="modal" data-target="#trailer">
     <img src="https://upload.wikimedia.org/wikipedia/en/d/d5/Iron_Man_3_theatrical_poster.jpg" width="220" height="342">
     <h4>Iron Man 3 <br> (2013)</h4>
 </div>
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="T6DJcgm3wNY" data-toggle="modal" data-target="#trailer">
+<div class="col-md-6 col-lg-4 movie-tile text-center" story_line-id="a reboot of the Superman film series that portrays the character's origin story" poster-id="https://upload.wikimedia.org/wikipedia/en/8/85/ManofSteelFinalPoster.jpg" data-trailer-youtube-id="T6DJcgm3wNY" data-toggle="modal" data-target="#trailer">
     <img src="https://upload.wikimedia.org/wikipedia/en/8/85/ManofSteelFinalPoster.jpg" width="220" height="342">
     <h4>Man of Steel <br> (2013)</h4>
 </div>
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="oX9ZT3RbYE4" data-toggle="modal" data-target="#trailer">
+<div class="col-md-6 col-lg-4 movie-tile text-center" story_line-id="Parker must stop Dr. Curt Connors as a mutated lizard from spreading a mutation serum to the city's human population" poster-id="https://upload.wikimedia.org/wikipedia/en/0/02/The_Amazing_Spider-Man_theatrical_poster.jpeg" data-trailer-youtube-id="oX9ZT3RbYE4" data-toggle="modal" data-target="#trailer">
     <img src="https://upload.wikimedia.org/wikipedia/en/0/02/The_Amazing_Spider-Man_theatrical_poster.jpeg" width="220" height="342">
     <h4>The Amazing Spider-Man <br> (2012)</h4>
 </div>
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="eOrNdBpGMv8" data-toggle="modal" data-target="#trailer">
+<div class="col-md-6 col-lg-4 movie-tile text-center" story_line-id="Nick Fury, director of the peacekeeping organization S.H.I.E.L.D., recruits Iron Man, Captain America, the Hulk, and Thor to form a team that must stop Thor's brother Loki" poster-id="https://upload.wikimedia.org/wikipedia/en/f/f9/TheAvengers2012Poster.jpg" data-trailer-youtube-id="eOrNdBpGMv8" data-toggle="modal" data-target="#trailer">
     <img src="https://upload.wikimedia.org/wikipedia/en/f/f9/TheAvengers2012Poster.jpg" width="220" height="342">
     <h4>The Avengers <br> (2012)</h4>
 </div>
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="GokKUqLcvD8" data-toggle="modal" data-target="#trailer">
+<div class="col-md-6 col-lg-4 movie-tile text-center" story_line-id="Bane (Tom Hardy), a revolutionary bent on destroying Gotham City who forces an older Bruce Wayne to come out of retirement and become Batman again" poster-id="https://upload.wikimedia.org/wikipedia/en/8/83/Dark_knight_rises_poster.jpg" data-trailer-youtube-id="GokKUqLcvD8" data-toggle="modal" data-target="#trailer">
     <img src="https://upload.wikimedia.org/wikipedia/en/8/83/Dark_knight_rises_poster.jpg" width="220" height="342">
     <h4>The Dark Knight Rises <br> (2012)</h4>
 </div>
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="f8ZPg8uaoR0" data-toggle="modal" data-target="#trailer">
+<div class="col-md-6 col-lg-4 movie-tile text-center" story_line-id="Hal is given a ring that grants him superpowers and must confront the evil Parallax, who threatens to upset the balance of power in the universe" poster-id="https://upload.wikimedia.org/wikipedia/en/6/6b/Green_Lantern_poster.jpg" data-trailer-youtube-id="f8ZPg8uaoR0" data-toggle="modal" data-target="#trailer">
     <img src="https://upload.wikimedia.org/wikipedia/en/6/6b/Green_Lantern_poster.jpg" width="220" height="342">
     <h4>Green Lantern <br> (2011)</h4>
 </div>

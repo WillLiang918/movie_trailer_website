@@ -20,9 +20,9 @@ main_page_head = '''
             padding-top: 80px;
         }
         #trailer .modal-dialog {
-            margin-top: 200px;
-            width: 640px;
-            height: 480px;
+            margin-top: 100px;
+            width: 900px;
+            margin-bottom: 200px;
         }
         .hanging-close {
             position: absolute;
@@ -33,6 +33,40 @@ main_page_head = '''
         #trailer-video {
             width: 100%;
             height: 100%;
+        }
+        #trailer-poster {
+            width: 100%;
+            height: 100%;
+        }
+        .poster-container{
+            top: 0;
+            left: 0;
+            width: 30%;
+            height: 430px;
+            position: absolute;
+        }
+        .youtube-container{
+            top: 0;
+            right: 0;
+            width: 70%;
+            height: 380px;
+            position: absolute;
+        }
+        .story_line-container{
+            top: 380px;
+            right: 0;
+            width: 70%;
+            height: 50px;
+            color: #999999;
+            border-style: solid;
+            border-width: 1px;
+            border-color: black;
+            position: absolute;
+            font-style: italic;
+            padding: 3px;
+            text-align: center;
+            align-items: center;
+            background-color: black;
         }
         .movie-tile {
             margin-bottom: 20px;
@@ -61,18 +95,34 @@ main_page_head = '''
         $(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event) {
             // Remove the src so the player itself gets removed, as this is the only
             // reliable way to ensure the video stops playing in IE
-            $("#trailer-video-container").empty();
+            $("#trailer-poster-container").empty();
+            $("#trailer-youtube-container").empty();
+            $("#trailer-story_line-container").empty();
         });
         // Start playing the video whenever the trailer modal is opened
         $(document).on('click', '.movie-tile', function (event) {
             var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
+            var trailerPosterId = $(this).attr('poster-id')
             var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
-            $("#trailer-video-container").empty().append($("<iframe></iframe>", {
-              'id': 'trailer-video',
-              'type': 'text-html',
-              'src': sourceUrl,
-              'frameborder': 0
-            }));
+            $("#trailer-youtube-container").empty().append(
+              $("<iframe></iframe>", {
+                'id': 'trailer-video',
+                'type': 'text-html',
+                'src': sourceUrl,
+                'frameborder': 0,
+              })
+            );
+            $("#trailer-poster-container").empty().append(
+              $("<img>", {
+                'id': 'trailer-poster',
+                'type': 'text-html',
+                'src': trailerPosterId,
+                'frameborder': 0,
+              })
+            );
+            $("#trailer-story_line-container").empty().text(
+                $(this).attr('story_line-id')
+            );
         });
         // Animate in the movies when the page loads
         $(document).ready(function () {
@@ -80,9 +130,6 @@ main_page_head = '''
             $(this).next("div").show("fast", showNext);
           });
         });
-        // Start playing the video whenever the trailer modal is opened
-        //$(document).on('click', '.dc', function (event) {
-            //}));
     </script>
 </head>
 '''
@@ -98,7 +145,11 @@ main_page_content = '''
           <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">
             <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>
           </a>
-          <div class="scale-media" id="trailer-video-container">
+          <div class="poster-container" id="trailer-poster-container">
+          </div>
+          <div class="youtube-container" id="trailer-youtube-container">
+          </div>
+          <div class="story_line-container" id="trailer-story_line-container">
           </div>
         </div>
       </div>
@@ -108,10 +159,7 @@ main_page_content = '''
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
           <div class="navbar-header">
-            <ul>
-                <a class="navbar-brand" href="#">Recent Marvel & DC Movies</a>
-
-            </ul>
+            <a class="navbar-brand" href="#">Recent Marvel & DC Movies</a>
           </div>
         </div>
       </div>
@@ -126,7 +174,7 @@ main_page_content = '''
 
 # A single movie entry html template
 movie_tile_content = '''
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
+<div class="col-md-6 col-lg-4 movie-tile text-center" story_line-id="{story_line}" poster-id="{poster_image_url}" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
     <img src="{poster_image_url}" width="220" height="342">
     <h4>{movie_title} <br> {movie_year}</h4>
 </div>
@@ -149,7 +197,8 @@ def create_movie_tiles_content(movies):
             movie_title=movie.title,
             poster_image_url=movie.poster_image_url,
             trailer_youtube_id=trailer_youtube_id,
-            movie_year="("+str(movie.year)+")"
+            movie_year="("+str(movie.year)+")",
+            story_line=movie.storyline
         )
     return content
 

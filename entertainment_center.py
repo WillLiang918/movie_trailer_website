@@ -63,7 +63,7 @@ thor_the_dark_world = media.Movie("Thor: The Dark World",
                                   2013)
 
 the_avengers = media.Movie("The Avengers",
-                           "Nick Fury, director of the peacekeeping organization S.H.I.E.L.D., recruits Iron Man, Captain America, the Hulk, and Thor to form a team that must stop Thor's brother Loki from subjugating Earth",
+                           "Nick Fury, director of the peacekeeping organization S.H.I.E.L.D., recruits Iron Man, Captain America, the Hulk, and Thor to form a team that must stop Thor's brother Loki",
                            "https://upload.wikimedia.org/wikipedia/en/f/f9/TheAvengers2012Poster.jpg",
                            "https://www.youtube.com/watch?v=eOrNdBpGMv8",
                            2012)
@@ -92,18 +92,21 @@ green_lantern = media.Movie("Green Lantern",
                             "https://www.youtube.com/watch?v=f8ZPg8uaoR0",
                             2011)
 
+#List of Marvel movies
 marvel_movies = [fantastic_four, ant_man, avengers_age_of_ultron,
             guardians_of_the_galaxy, x_men_days_of_future_past, the_amazing_spider_man_2, captain_america_the_winter_soldier,
             thor_the_dark_world, the_wolverine, iron_man_3,
             the_amazing_spider_man, the_avengers]
 
+#List of DC movies
 dc_movies = [man_of_steel,
             the_dark_knight_rises,
             green_lantern]
 
+#List of Marvel and DC movies
 movies = marvel_movies + dc_movies
+
+#Sort movies by year of release in descending order
 sorted_movies = sorted(movies, key=operator.attrgetter('year'), reverse=True)
 
 fresh_tomatoes.open_movies_page(sorted_movies)
-#print(media.Movie.VALID_RATINGS)
-#print(media.Movie.__doc__)
