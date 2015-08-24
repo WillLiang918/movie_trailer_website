@@ -46,6 +46,7 @@
             height: 380px;
             position: absolute;
         }
+        /*Display text under the trailer*/
         .story_line-container{
             top: 380px;
             right: 0;
@@ -106,6 +107,7 @@
                 'frameborder': 0,
               })
             );
+            // Displays movie poster along with trailer
             $("#trailer-poster-container").empty().append(
               $("<img>", {
                 'id': 'trailer-poster',
@@ -114,6 +116,7 @@
                 'frameborder': 0,
               })
             );
+            // Displays a brief synopsis of the movie
             $("#trailer-story_line-container").empty().text(
                 $(this).attr('story_line-id')
             );
@@ -135,6 +138,7 @@
           <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">
             <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>
           </a>
+          <!-- Removed trailer-video-container and added a poster/trailer/storyline container -->
           <div class="poster-container" id="trailer-poster-container">
           </div>
           <div class="youtube-container" id="trailer-youtube-container">
@@ -155,7 +159,7 @@
       </div>
     </div>
     <div class="container">
-
+      
 <div class="col-md-6 col-lg-4 movie-tile text-center" story_line-id="The team must learn to harness abilities gained from an alternate universe to save Earth from a friend turned enemy" poster-id="https://upload.wikimedia.org/wikipedia/en/f/f4/Fantastic_Four_2015_poster.jpg" data-trailer-youtube-id="_rRoD28-WgU" data-toggle="modal" data-target="#trailer">
     <img src="https://upload.wikimedia.org/wikipedia/en/f/f4/Fantastic_Four_2015_poster.jpg" width="220" height="342">
     <h4>Fantastic Four <br> (2015)</h4>

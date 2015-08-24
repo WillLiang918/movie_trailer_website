@@ -52,6 +52,7 @@ main_page_head = '''
             height: 380px;
             position: absolute;
         }
+        /*Display text under the trailer*/
         .story_line-container{
             top: 380px;
             right: 0;
@@ -112,6 +113,7 @@ main_page_head = '''
                 'frameborder': 0,
               })
             );
+            // Displays movie poster along with trailer
             $("#trailer-poster-container").empty().append(
               $("<img>", {
                 'id': 'trailer-poster',
@@ -120,6 +122,7 @@ main_page_head = '''
                 'frameborder': 0,
               })
             );
+            // Displays a brief synopsis of the movie
             $("#trailer-story_line-container").empty().text(
                 $(this).attr('story_line-id')
             );
@@ -145,6 +148,7 @@ main_page_content = '''
           <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">
             <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>
           </a>
+          <!-- Removed trailer-video-container and added a poster/trailer/storyline container -->
           <div class="poster-container" id="trailer-poster-container">
           </div>
           <div class="youtube-container" id="trailer-youtube-container">
@@ -197,6 +201,7 @@ def create_movie_tiles_content(movies):
             movie_title=movie.title,
             poster_image_url=movie.poster_image_url,
             trailer_youtube_id=trailer_youtube_id,
+            # Added movie year and storyline to the website
             movie_year="("+str(movie.year)+")",
             story_line=movie.storyline
         )
